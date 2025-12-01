@@ -8,6 +8,8 @@ def run_command(command):
     if result.stderr:
         print("Error:", result.stderr)
 
+# ... existing code ...
+
 def git_upload():
     # 获取用户输入
     repo_url = input("请输入远程仓库的 URL: ")
@@ -24,14 +26,20 @@ def git_upload():
     # 添加新的远程仓库
     run_command(f"git remote add origin {repo_url}")
 
+    # 先拉取远程更改（如果有）
+    print("正在拉取远程更改...")
+    run_command("git pull origin main --allow-unrelated-histories")
+
     # 添加所有文件到暂存区
     run_command("git add .")
 
     # 提交文件
     run_command(f'git commit -m "{commit_message}"')
 
-    # 推送到主分支（默认分支：main）
-    run_command("git push -u origin main")  # 如果是 master 分支，可以替换为 `master`
+    # 推送到主分支
+    run_command("git push -u origin main")
+
+# ... existing code ...
 
 if __name__ == "__main__":
     git_upload()
